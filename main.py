@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+import uvicorn
 
 app = FastAPI()
 
@@ -26,3 +27,14 @@ def by_address(address: str):
     result = [user for user in users if user["address"].lower() == address.lower()]
     if result:
         return result
+    
+@app.post("/users")
+def add_user(user: dict):
+    users.append(user)
+    return {"message": "User qoshildi", "user": user}
+
+
+if __name__ == '__main__':
+    uvicorn.run(app)
+
+
