@@ -3,12 +3,13 @@ from fastapi import FastAPI
 app = FastAPI()
 
 users = [
-    {"id": 1, "name": "Ali" },
-    {"id": 2, "name": "Vali"},
-    {"id": 3, "name": "Salim"},
-    {"id": 4, "name": "Karim"},
-    {"id": 5, "name": "Aziz"}
+    {"id": 1, "name": "Ali", "address": "Toshkent"},
+    {"id": 2, "name": "Vali", "address": "Samarqand"},
+    {"id": 3, "name": "Salim", "address": "Buxoro"},
+    {"id": 4, "name": "Karim", "address": "Andijon"},
+    {"id": 5, "name": "Aziz", "address": "Namangan"}
 ]
+
 
 @app.get("/users")
 def get_users():
@@ -20,3 +21,8 @@ def get_user(user_id: int):
         if user["id"] == user_id:
             return user
     
+@app.get("/users/address/{address}")
+def by_address(address: str):
+    result = [user for user in users if user["address"].lower() == address.lower()]
+    if result:
+        return result
